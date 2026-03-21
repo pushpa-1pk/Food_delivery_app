@@ -35,27 +35,6 @@ export function createApp() {
     res.json({ ok: true });
   });
 
-  app.get("/api/fix-restaurant-slug", async (_req, res) => {
-    try {
-      const { PrismaClient } = require('@prisma/client');
-      const db = new PrismaClient();
-      
-      const restaurant = await db.restaurant.findFirst();
-      if (!restaurant) {
-        return res.status(404).json({ error: "No restaurant found to update!" });
-      }
-
-      const updated = await db.restaurant.update({
-        where: { id: restaurant.id },
-        data: { slug: "jay-malhar-main", name: "Jay Malhar" }
-      });
-
-      res.json({ success: true, message: "RESTAURANT SLUG UPDATED TO 'jay-malhar-main'! PLEASE DELETE THIS CODE FROM app.ts NOW.", data: updated });
-    } catch (error: any) {
-      res.status(500).json({ error: error.message });
-    }
-  });
-
   app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   app.use("/api/auth", authRoutes);
   app.use("/api/restaurants", restaurantRoutes);
