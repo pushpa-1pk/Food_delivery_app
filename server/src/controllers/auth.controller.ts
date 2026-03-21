@@ -9,8 +9,9 @@ import { ApiError } from "@/utils/api-error";
 import { sendEmail } from "@/services/email.service";
 
 function setAuthCookies(res: any, accessToken: string, refreshToken: string) {
-  res.cookie("accessToken", accessToken, { httpOnly: true, sameSite: "lax", secure: false });
-  res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "lax", secure: false });
+  const isProduction = process.env.NODE_ENV === "production";
+  res.cookie("accessToken", accessToken, { httpOnly: true, sameSite: isProduction ? "none" : "lax", secure: isProduction });
+  res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: isProduction ? "none" : "lax", secure: isProduction });
 }
 
 export const register = catchAsync(async (req, res) => {
@@ -90,7 +91,8 @@ export const refresh = catchAsync(async (req, res) => {
   }
 
   const accessToken = signAccessToken({ id: user.id, email: user.email, role: user.role });
-  res.cookie("accessToken", accessToken, { httpOnly: true, sameSite: "lax", secure: false });
+  const isProduction = process.env.NODE_ENV === "production";
+  res.cookie("accessToken", accessToken, { httpOnly: true, sameSite: isProduction ? "none" : "lax", secure: isProduction });
   res.json({ message: "Token refreshed", data: { accessToken } });
 });
 
@@ -104,8 +106,9 @@ export const logout = catchAsync(async (req, res) => {
     }).catch(() => undefined);
   }
 
-  res.clearCookie("accessToken");
-  res.clearCookie("refreshToken");
+  const isProduction = process.env.NODE_ENV === "production";
+  res.clearCookie("accessToken", { httpOnly: true, sameSite: isProduction ? "none" : "lax", secure: isProduction });
+  res.clearCookie("refreshToken", { httpOnly: true, sameSite: isProduction ? "none" : "lax", secure: isProduction });
   res.json({ message: "Logged out successfully" });
 });
 
