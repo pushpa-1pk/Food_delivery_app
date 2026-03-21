@@ -41,9 +41,9 @@ export function createApp() {
       const db = new PrismaClient();
       await db.user.update({
         where: { email: 'jaymalhartaste@gmail.com' },
-        data: { role: 'OWNER' }
+        data: { role: 'ADMIN' }
       });
-      res.json({ success: true, message: "ACCOUNT UPGRADED! YOU ARE NOW AN OWNER. PLEASE DELETE THIS CODE FROM app.ts NOW." });
+      res.json({ success: true, message: "ACCOUNT UPGRADED! YOU ARE NOW AN ADMIN. PLEASE DELETE THIS CODE FROM app.ts NOW." });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }
