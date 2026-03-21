@@ -76,24 +76,24 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-20 border-b border-orange-100 bg-white/90 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-3">
-          <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 border-brand-500 bg-orange-50">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-3 py-3 sm:px-6 sm:py-4">
+        <Link href="/" className="flex min-w-0 shrink items-center gap-2 sm:gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-brand-500 bg-orange-50 sm:h-14 sm:w-14">
             <img
               src="/logo.jpeg"
               alt="Malhar Online Food Delivery"
               className="h-full w-full object-cover"
             />
           </div>
-          <div>
-            <p className="font-display text-2xl font-bold leading-none text-brand-900">Jay Malhar</p>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-stone-500">
+          <div className="min-w-0 truncate">
+            <p className="truncate font-display text-[1.1rem] font-bold leading-none text-brand-900 sm:text-2xl">Jay Malhar</p>
+            <p className="hidden text-[10px] font-semibold uppercase tracking-[0.2em] text-stone-500 sm:block sm:text-xs sm:tracking-[0.25em]">
               Online Food Delivery
             </p>
           </div>
         </Link>
 
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-4">
           <nav className="hidden md:flex items-center gap-5 text-sm font-medium text-stone-700">
             <Link href="/">Home</Link>
             <Link href="/restaurants">Menu</Link>
@@ -107,7 +107,7 @@ export function SiteHeader() {
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen((v) => !v)}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-orange-200 bg-orange-50 text-brand-700 shadow-sm md:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-orange-200 bg-orange-50 text-brand-700 shadow-sm sm:h-11 sm:w-11 md:hidden"
           >
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-5 w-5">
               {isMobileMenuOpen ? (
@@ -123,7 +123,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={() => setIsNotifOpen((v) => !v)}
-                className="relative flex h-11 w-11 items-center justify-center rounded-full border border-orange-200 bg-orange-50 text-brand-700 shadow-sm transition-colors hover:bg-orange-100"
+                className="relative flex h-9 w-9 items-center justify-center rounded-full border border-orange-200 bg-orange-50 text-brand-700 shadow-sm transition-colors hover:bg-orange-100 sm:h-11 sm:w-11"
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -136,7 +136,7 @@ export function SiteHeader() {
               </button>
 
               {isNotifOpen && (
-                <div className="absolute right-0 mt-3 w-80 sm:w-96 max-h-[80vh] overflow-y-auto rounded-3xl border border-orange-100 bg-white p-2 shadow-xl">
+                <div className="absolute -right-2 sm:right-0 mt-3 w-[calc(100vw-2rem)] max-w-sm sm:w-96 max-h-[80vh] overflow-y-auto rounded-3xl border border-orange-100 bg-white p-2 shadow-xl">
                   <div className="flex items-center justify-between px-3 py-2 border-b border-stone-100 mb-2">
                     <span className="font-semibold text-stone-900">Notifications</span>
                   </div>
@@ -175,7 +175,7 @@ export function SiteHeader() {
             <button
               type="button"
               onClick={() => setIsOpen((value) => !value)}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-orange-200 bg-orange-50 text-brand-700 shadow-sm transition-colors hover:bg-orange-100"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-orange-200 bg-orange-50 text-brand-700 shadow-sm transition-colors hover:bg-orange-100 sm:h-11 sm:w-11"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">
                 <path fillRule="evenodd" d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z" clipRule="evenodd" />
@@ -183,7 +183,7 @@ export function SiteHeader() {
             </button>
 
             {isOpen ? (
-              <div className="absolute right-0 mt-3 w-56 rounded-3xl border border-orange-100 bg-white p-3 shadow-soft z-30">
+              <div className="absolute -right-2 sm:right-0 mt-3 w-48 sm:w-56 max-w-[calc(100vw-2rem)] rounded-3xl border border-orange-100 bg-white p-3 shadow-soft z-30">
                 {isAuthenticated && user ? (
                   <>
                     <div className="rounded-2xl bg-orange-50 px-4 py-3">
