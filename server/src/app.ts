@@ -35,20 +35,6 @@ export function createApp() {
     res.json({ ok: true });
   });
 
-  app.get("/api/make-me-owner", async (_req, res) => {
-    try {
-      const { PrismaClient } = require('@prisma/client');
-      const db = new PrismaClient();
-      await db.user.update({
-        where: { email: 'jaymalhartaste@gmail.com' },
-        data: { role: 'ADMIN' }
-      });
-      res.json({ success: true, message: "ACCOUNT UPGRADED! YOU ARE NOW AN ADMIN. PLEASE DELETE THIS CODE FROM app.ts NOW." });
-    } catch (error: any) {
-      res.status(500).json({ error: error.message });
-    }
-  });
-
   app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   app.use("/api/auth", authRoutes);
   app.use("/api/restaurants", restaurantRoutes);
