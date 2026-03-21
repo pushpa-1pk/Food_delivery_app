@@ -35,6 +35,42 @@ export function createApp() {
     res.json({ ok: true });
   });
 
+  app.get("/api/seed-restaurant", async (_req, res) => {
+    try {
+      const { PrismaClient } = require('@prisma/client');
+      const db = new PrismaClient();
+      
+      const admin = await db.user.findUnique({ where: { email: 'jaymalhartaste@gmail.com' } });
+      if (!admin) {
+        return res.status(404).json({ error: "Admin account not found. Please register first." });
+      }
+
+      const existing = await db.restaurant.findFirst();
+      if (existing) {
+        return res.json({ success: true, message: "Restaurant already exists!", data: existing });
+      }
+
+      const restaurant = await db.restaurant.create({
+        data: {
+          sellerId: admin.id,
+          name: "Jay Malhar",
+          slug: "jay-malhar",
+          description: "Authentic taste and delicious food delivery.",
+          address: "Main Road",
+          city: "Pune",
+          openingHours: "9:00 AM - 11:00 PM",
+          status: "APPROVED",
+          categories: ["Veg", "Non-Veg", "Chinese"],
+          images: ["/logo.jpeg"]
+        }
+      });
+
+      res.json({ success: true, message: "MASTER RESTAURANT SEEDED! PLEASE DELETE THIS CODE FROM app.ts NOW.", data: restaurant });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   app.use("/api/auth", authRoutes);
   app.use("/api/restaurants", restaurantRoutes);
