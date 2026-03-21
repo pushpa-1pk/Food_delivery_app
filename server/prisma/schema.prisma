@@ -1,0 +1,195 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                        String         @id @default(cuid())
+  name                      String
+  email                     String         @unique
+  phone                     String?
+  password                  String
+  role                      Role           @default(CUSTOMER)
+  isEmailVerified           Boolean        @default(false)
+  refreshToken              String?
+  emailVerifyToken          String?
+  passwordResetToken        String?
+  createdAt                 DateTime       @default(now())
+  updatedAt                 DateTime       @updatedAt
+  passwordResetTokenExpires DateTime?
+  pushNotifications         Boolean        @default(true)
+  emailNotifications        Boolean        @default(true)
+  notifications             Notification[]
+  orders                    Order[]
+  restaurants               Restaurant[]
+  reviews                   Review[]
+
+  @@index([role])
+  @@index([email])
+}
+
+model Restaurant {
+  id             String           @id @default(cuid())
+  sellerId       String
+  name           String
+  slug           String           @unique
+  description    String
+  address        String
+  city           String
+  rating         Float            @default(0)
+  images         String[]
+  categories     String[]
+  deliveryFee    Int              @default(40)
+  deliveryRadius Int              @default(10)
+  openingHours   String
+  isOpen         Boolean          @default(true)
+  status         RestaurantStatus @default(PENDING)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  menuItems      MenuItem[]
+  orders         Order[]
+  seller         User             @relation(fields: [sellerId], references: [id])
+  reviews        Review[]
+
+  @@index([sellerId])
+  @@index([slug])
+  @@index([status])
+}
+
+model MenuItem {
+  id           String      @id @default(cuid())
+  restaurantId String
+  name         String
+  description  String
+  price        Int
+  category     String
+  image        String?
+  isAvailable  Boolean     @default(true)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  isVeg        Boolean     @default(true)
+  discount     Int         @default(0)
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
+  orderItems   OrderItem[]
+  reviews      Review[]
+
+  @@index([restaurantId, category])
+}
+
+model Coupon {
+  id              String    @id @default(cuid())
+  code            String    @unique
+  discountPercent Int
+  isActive        Boolean   @default(true)
+  usageCount      Int       @default(0)
+  expiresAt       DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  orders          Order[]
+
+  @@index([code, isActive])
+}
+
+model Order {
+  id              String         @id @default(cuid())
+  orderNumber     Int            @unique @default(autoincrement())
+  userId          String
+  restaurantId    String
+  status          OrderStatus    @default(PENDING)
+  totalPrice      Int
+  paymentStatus   PaymentStatus  @default(PENDING)
+  paymentMethod   String
+  deliveryAddress Json
+  notes           String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  couponId        String?
+  notifications   Notification[]
+  coupon          Coupon?        @relation(fields: [couponId], references: [id])
+  restaurant      Restaurant     @relation(fields: [restaurantId], references: [id])
+  user            User           @relation(fields: [userId], references: [id])
+  items           OrderItem[]
+
+  @@index([userId, createdAt])
+  @@index([restaurantId, status])
+  @@index([couponId])
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  orderId    String
+  menuItemId String
+  quantity   Int
+  price      Int
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+  order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+}
+
+model Review {
+  id           String     @id @default(cuid())
+  userId       String
+  restaurantId String
+  rating       Int
+  comment      String
+  createdAt    DateTime   @default(now())
+  menuItemId   String?
+  menuItem     MenuItem?  @relation(fields: [menuItemId], references: [id])
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  user         User       @relation(fields: [userId], references: [id])
+
+  @@index([restaurantId])
+  @@index([menuItemId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String?
+  role      Role?
+  type      String
+  title     String
+  message   String
+  orderId   String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  order     Order?   @relation(fields: [orderId], references: [id])
+  user      User?    @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
+  @@index([role, createdAt])
+  @@index([orderId])
+}
+
+enum Role {
+  CUSTOMER
+  SELLER
+  ADMIN
+}
+
+enum RestaurantStatus {
+  PENDING
+  APPROVED
+  SUSPENDED
+}
+
+enum OrderStatus {
+  PENDING
+  ACCEPTED
+  PREPARING
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+  REJECTED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}

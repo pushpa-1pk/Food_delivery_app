@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  @apply bg-sand text-ink font-body min-h-screen;
+  background-color: #fef7ed;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  outline-color: transparent;
+}
+
+a {
+  @apply transition-colors;
+}
+
+@keyframes reviewFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.review-fade-in {
+  animation: reviewFadeIn 0.5s ease-out both;
+}

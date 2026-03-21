@@ -1,0 +1,5 @@
+Place the provided Jay Malhar logo image in this folder as:
+
+logo.jpg
+
+The navbar is already wired to display /logo.jpg.
