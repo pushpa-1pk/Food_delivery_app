@@ -135,7 +135,7 @@ export default function HomePage() {
               <span className="h-[2px] w-12 bg-brand-500/30" />
             </div>
             <p className="mt-6 text-base leading-8 text-stone-700">
-              Founded by <strong>Proprietor Chirag Megham</strong>, Jay Malhar Restaurant brings authentic
+              Founded by <strong>Proprietor Chirag Meshram</strong>, Jay Malhar Restaurant brings authentic
               Maharashtrian flavors with fresh ingredients and traditional recipes. We focus on quality,
               hygiene, and quick delivery so every customer enjoys a great meal every time.
             </p>

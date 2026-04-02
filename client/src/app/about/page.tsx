@@ -93,7 +93,7 @@ export default function AboutPage() {
               <span className="h-[2px] w-12 bg-brand-500/30" />
             </div>
             <p className="mt-6 text-base leading-8 text-stone-700">
-              Jay Malhar Restaurant was started by <strong>Proprietor Chirag Megham</strong> with a simple
+              Jay Malhar Restaurant was started by <strong>Proprietor Chirag Meshram</strong> with a simple
               vision — to bring authentic, homestyle Maharashtrian food to every doorstep. What began as a small
               kitchen has grown into a trusted name for quality meals in the community.
             </p>
@@ -260,7 +260,7 @@ export default function AboutPage() {
               We Are Happy to Serve You
             </h2>
             <p className="mt-5 text-lg leading-8 text-orange-50/90">
-              Order now and enjoy delicious meals prepared with love by <strong>Chirag Megham</strong> and the
+              Order now and enjoy delicious meals prepared with love by <strong>Chirag Meshram</strong> and the
               Jay Malhar team. Fresh food, fast delivery, unforgettable taste.
             </p>
             <div className="mt-4 text-base text-orange-100">

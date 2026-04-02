@@ -126,7 +126,7 @@ export default function ContactPage() {
             {/* Owner Card */}
             <div className="rounded-[2.5rem] bg-ink p-8 text-white shadow-soft">
               <p className="text-sm font-semibold uppercase tracking-[0.3em] text-orange-300">Proprietor</p>
-              <h2 className="mt-3 font-display text-3xl">Chirag Megham</h2>
+              <h2 className="mt-3 font-display text-3xl">Chirag Meshram</h2>
               <p className="mt-4 text-sm leading-7 text-stone-400">
                 Dedicated to bringing authentic taste, fresh ingredients, and fast service to every customer.
                 Order now and experience the Jay Malhar difference.
