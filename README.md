@@ -72,12 +72,6 @@ The application solves key operational pain points in food retail:
 - **Menu Catalog Management:** Create, edit, and toggle food availability (in-stock vs. sold-out), update pricing, adjust veg/non-veg flags, and upload images.
 - **Store Configuration:** Toggle store status (`Open` / `Closed`), update delivery fees, delivery radius, and opening hours.
 
-### Administrator Dashboard
-- **Business Analytics:** Aggregated metrics for total revenue, active orders, customer counts, and sales velocity.
-- **Customer Oversight:** Customer registry, order histories, and notification dispatch.
-- **Restaurant Approval Flow:** System capability to audit, approve, or suspend restaurant branches.
-- **Coupon & Campaign Management:** Create and deactivate promotional discount vouchers.
-
 ### Real-Time WebSocket Engine
 - **Socket.IO Integration:** Bidirectional communication between client and server.
 - **Instant Event Triggers:** Real-time order status updates pushed directly to the customer's tracking screen without polling.
@@ -316,20 +310,6 @@ Once initialized, access the applications at:
 - 🌐 **Frontend Web App:** [http://localhost:3000](http://localhost:3000)
 - 🔌 **Backend REST API:** [http://localhost:5000/api](http://localhost:5000/api)
 - 📑 **Interactive Swagger API Docs:** [http://localhost:5000/docs](http://localhost:5000/docs)
-
----
-
-## 🔑 Default Demo Credentials
-
-The database seeder automatically initializes three test accounts representing the platform's user roles:
-
-| Role | Email Address | Password | Intended Portal / Access |
-| :--- | :--- | :--- | :--- |
-| **Admin** | `admin@jaymalhar.com` | `Password@123` | Complete administrative dashboard at `/admin/dashboard` |
-| **Seller / Owner** | `seller@jaymalhar.com` | `Password@123` | Kitchen & restaurant controls via `/owner-login` |
-| **Customer** | `customer@example.com` | `Password@123` | Regular storefront ordering at `/signin` |
-
-> *All seeded accounts have their email pre-verified (`isEmailVerified: true`).*
 
 ---
 
